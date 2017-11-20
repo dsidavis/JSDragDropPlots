@@ -1,0 +1,6 @@
+[done] Clone the object being dropped.
+
+[done] Can redrag the image between rectangles.
+     But redragging an SVG object gives an error.
+     It is the drop that gives the error.
+     I hadn't put the ondragstart attribute on the new DIV object.

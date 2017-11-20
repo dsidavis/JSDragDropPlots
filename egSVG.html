@@ -48,31 +48,29 @@ function drop(ev) {
 //#     if(ctr)
 //	 alert("drop id " + data);
     var obj = document.getElementById(data);
-//    var k = obj.cloneNode();
-//     k.id = "bob";
-//     alert(k);
-     k = document.createElement('div');
-     k.className = "cloneDiv";
-     k.draggable = true;
+    obj = obj.cloneNode(true);
+    var k = document.createElement('div');
+    k.className = "cloneDiv";
+    k.draggable = true;
      //     k['ondragstart'] = "drag(event)";
-     k.setAttribute('ondragstart', "drag(event)");     
-     k['id'] = data + "_clone";
-     k.appendChild(obj);
+    k.setAttribute('ondragstart', "drag(event)");     
+    k['id'] = data + "_clone";
+    k.appendChild(obj);
      
      //     var k = Object.assign({}, obj);
-     k.style.width = "100%"; k.style.height = 60;
-     console.log("drop object name " + obj.nodeName);
+    k.style.width = "100%"; k.style.height = 60;
+    console.log("drop object name " + obj.nodeName);
      
-     if(obj.nodeName == "IMG") {
-	 obj.width = "100";
-	 obj.height = 60;	 
-     } else {
+    if(obj.nodeName == "IMG") {
+	obj.width = "100";
+	obj.height = 60;	 
+    } else {
 	 obj.style.width = "100%";
 	 obj.style.height = 60;	 
-     }
+    }
 
-     ev.target.appendChild(k);
-     console.log("drop finished");
+    ev.target.appendChild(k);
+    console.log("drop finished");
 }
 </script>
 </head>
