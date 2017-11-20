@@ -22,10 +22,12 @@ function allowDrop(ev) {
 
  function drag(ev) {
      var id;
-     if(ev.target.name == "div")
+     console.log("in drag " + ev.target.nodeName);
+     if(ev.target.nodeName == "DIV")
 	 id = ev.target.children[0].id;
      else
 	 id = ev.target.id;
+    console.log("dragging " + id);
     ev.dataTransfer.setData("text", id); //ev.target.children[0].id); //ev.target.id);
  }
 
@@ -147,6 +149,14 @@ function drop(ev) {
 </g>
 </svg>
 </div>
+
+<br/>
+
+<div draggable="true" ondragstart="drag(event)">
+ <svg id="svg2" xmlns:svg="http://www.w3.org/2000/svg" x="0" y="0" width="100px" height="100px">
+  <circle cx="50" cy="50" r="20" fill="red" />
+ </svg>	
+</div>    
 
 </body>
 </html>
