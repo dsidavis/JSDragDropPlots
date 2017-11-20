@@ -11,7 +11,7 @@
  
 .cloneDiv {
      border: solid black 1pt;
-     background: blue;
+//     background: blue;
      border-style: solid;
 }
 </style>
@@ -20,20 +20,24 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
- function drag(ev) {
+function drag(ev) {
      var id;
-     console.log("in drag " + ev.target.nodeName);
-     if(ev.target.nodeName == "DIV")
+     console.log("drag target name " + ev.target.nodeName);
+     if(ev.target.nodeName == "DIV") {
+	 var tmp = ev.target.getElementsByTagName("svg");
+	 console.log(" drag tmp: " + tmp);
 	 id = ev.target.children[0].id;
-     else
-	 id = ev.target.id;
-    console.log("dragging " + id);
-    ev.dataTransfer.setData("text", id); //ev.target.children[0].id); //ev.target.id);
+     } else
+     id = ev.target.id;
+     
+     console.log("drag id = " + id);
+     ev.dataTransfer.setData("text", id); //ev.target.children[0].id); //ev.target.id);
  }
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    console.log("drop id = " + data);     
     var obj = document.getElementById(data);
 //    var k = obj.cloneNode();
 //     k.id = "bob";
@@ -46,15 +50,24 @@ function drop(ev) {
      
      //     var k = Object.assign({}, obj);
      k.style.width = "100%"; k.style.height = 60;
-     obj.style.width = "100%"; obj.style.height = 60;
-//     k.style.background = "blue";
-    ev.target.appendChild(k);
+     console.log("drop object name " + obj.nodeName);
+     
+     if(obj.nodeName == "IMG") {
+	 obj.width = "100";
+	 obj.height = 60;	 
+     } else {
+	 obj.style.width = "100%";
+	 obj.style.height = 60;	 
+     }
+
+     ev.target.appendChild(k);
+     console.log("drop finished");
 }
 </script>
 </head>
 <body>
 
-<p>Drag the W3Schools image into the rectangle:</p>
+<p>Drag any of the images into a rectangle.</p>
 
 <div class="drop" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div><br/>
 <div class="drop" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div><br/>
@@ -73,8 +86,8 @@ function drop(ev) {
 <img id="drag1" src="dsi-logo-rgb-text-96dpi.jpg" draggable="true" ondragstart="drag(event)" width=100 height=100>
 
 <div class="xcloneDiv" draggable="true" ondragstart="drag(event)" id="divSVG">
-<svg version="1.1" id="svg" draggable="true" ondragstart="drag(event)"
-	 id="svg2" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
+<svg version="1.1" id="svgLogo" draggable="true" ondragstart="drag(event)"
+	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="307.653px"
 	 height="157.986px" viewBox="0 0 307.653 157.986" enable-background="new 0 0 307.653 157.986" xml:space="preserve">
 <g id="g10" transform="matrix(1.3333333,0,0,-1.3333333,0,157.98667)">
@@ -153,7 +166,7 @@ function drop(ev) {
 <br/>
 
 <div draggable="true" ondragstart="drag(event)">
- <svg id="svg2" xmlns:svg="http://www.w3.org/2000/svg" x="0" y="0" width="100px" height="100px">
+ <svg id="svgCircle" xmlns:svg="http://www.w3.org/2000/svg" x="0" y="0" width="100px" height="100px">
   <circle cx="50" cy="50" r="20" fill="red" />
  </svg>	
 </div>    
