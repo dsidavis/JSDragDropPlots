@@ -20,6 +20,8 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
+var ctr = 0;
+ 
 function drag(ev) {
      var id;
      console.log("drag target name " + ev.target.nodeName);
@@ -28,16 +30,23 @@ function drag(ev) {
 	 console.log(" drag tmp: " + tmp);
 	 id = ev.target.children[0].id;
      } else
-     id = ev.target.id;
+         id = ev.target.id;
+//     if(ctr)
+//        alert("drag id = " + id);
      
      console.log("drag id = " + id);
-     ev.dataTransfer.setData("text", id); //ev.target.children[0].id); //ev.target.id);
+     ev.dataTransfer.setData("text", id); 
+     ctr++;
  }
 
+
+ 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    console.log("drop id = " + data);     
+     console.log("drop id = " + data);
+//#     if(ctr)
+//	 alert("drop id " + data);
     var obj = document.getElementById(data);
 //    var k = obj.cloneNode();
 //     k.id = "bob";
@@ -45,8 +54,10 @@ function drop(ev) {
      k = document.createElement('div');
      k.className = "cloneDiv";
      k.draggable = true;
+     //     k['ondragstart'] = "drag(event)";
+     k.setAttribute('ondragstart', "drag(event)");     
+     k['id'] = data + "_clone";
      k.appendChild(obj);
-     k.id = data + "_clone";
      
      //     var k = Object.assign({}, obj);
      k.style.width = "100%"; k.style.height = 60;
@@ -85,7 +96,7 @@ function drop(ev) {
 
 <img id="drag1" src="dsi-logo-rgb-text-96dpi.jpg" draggable="true" ondragstart="drag(event)" width=100 height=100>
 
-<div class="xcloneDiv" draggable="true" ondragstart="drag(event)" id="divSVG">
+<div draggable="true" ondragstart="drag(event)" id="divSVG">
 <svg version="1.1" id="svgLogo" draggable="true" ondragstart="drag(event)"
 	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="307.653px"
